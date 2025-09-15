@@ -1,0 +1,30 @@
+<h3>Edición de {{ articulo?.name }}</h3>
+
+<form>
+  <div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input
+      type="text"
+      id="nombre"
+      name="nombre"
+      class="form-control"
+      [(ngModel)]="model.name"
+    />
+  </div>
+  <div class="form-group">
+    <label for="nombre">Descripción</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      class="form-control"
+      [(ngModel)]="model.description"
+    />
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button type="submit" class="btn btn-primary" (click)="saveForm()">
+      Guardar
+    </button>
+  </div>
+</form>

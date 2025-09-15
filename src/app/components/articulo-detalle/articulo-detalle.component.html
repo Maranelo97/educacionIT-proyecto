@@ -1,1 +1,13 @@
-<p>articulo-detalle works!</p>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ articulo?.name }}</h5>
+    <p class="card-text">{{ articulo?.description }}</p>
+
+    <button
+      class="btn"
+      [ngClass]="{ 'btn-primary': isStock, 'btn-danger': !isStock }"
+    >
+      {{ isStock ? 'Hay stock' : 'No hay stock' }}
+    </button>
+  </div>
+</div>

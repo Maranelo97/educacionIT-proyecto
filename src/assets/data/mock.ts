@@ -57,6 +57,6 @@ export const mock = [
     "id": 10,
     "name": "Articulo10",
     "description": "Descripción Articulo 10",
-    "stock": 40
+    "stock": 0
   }
 ]

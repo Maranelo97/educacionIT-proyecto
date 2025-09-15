@@ -1,14 +1,24 @@
 <h2>{{ this.descripcion }}</h2>
 
 <ul>
-    @for (article of items; track article.id){
-        <h2>{{article.id}}</h2>
-        <p>{{article.name}}</p>
-        <li>{{article.description}}</li>
-        <li>{{article.stock}}</li>
-        <button class="btn btn-primary" (click)="onSelect(article)">Ver</button>
-    }
-    @empty {
-        <li>No Proucts aviable</li>
-    }
+  @for (article of items; track article.id){
+
+  <p>{{ article.name }}</p>
+  <div class="d-flex">
+    <button class="btn btn-primary">
+      <a class="text-white fw-bold" [routerLink]="['/articulos', article.id]"
+        >Ver</a
+      >
+    </button>
+    <button class="btn btn-secondary">
+      <a
+        class="text-white fw-bold"
+        [routerLink]="[`/articulos/${article.id}/edit`]"
+        >Editar</a
+      >
+    </button>
+  </div>
+  } @empty {
+  <li>No Proucts aviable</li>
+  }
 </ul>
