@@ -32,7 +32,7 @@ export class ArticuloEdicionComponent implements OnInit {
 
       this.articulosService.getArtById(articuloId).subscribe((res) => {
         this.articulo = res
-        
+
 
         this.model = new FormValues(
           res.id,
@@ -44,15 +44,24 @@ export class ArticuloEdicionComponent implements OnInit {
     });
 
 
-    console.log(this.articulo)
   }
 
-
   saveForm() {
-    const name = this.model.name
-    const description = this.model.description
+    const articuloEditado: IArticulo = {
+      id: this.model.id,
+      name: this.model.name,
+      description: this.model.description,
+      stock: this.model.stock
+    };
 
-    console.log("Valores enviados: ", name, description)
-
+    this.articulosService.editArt(this.model.id, articuloEditado).subscribe({
+      next: (res) => {
+        console.log("Artículo actualizado correctamente:", res);
+        // Aquí podrías navegar de vuelta a la lista o mostrar un mensaje
+      },
+      error: (err) => {
+        console.error("Error al actualizar el artículo:", err);
+      }
+    });
   }
 }

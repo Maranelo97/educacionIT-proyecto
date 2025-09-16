@@ -30,8 +30,11 @@ export class ArticulosService {
     return this.client.get<IArticulo>(`${environment.api}/${id}`)
   }
 
-  /*
-  editArt(id:number, name: string):Observable<IArticulo>{
-    return this.client.put<IArticulo>, name(`${environment.api}/${id}`)
-  } */
+
+editArt(id: number, articulo: IArticulo): Observable<IArticulo> {
+  return this.client.put<IArticulo>(
+    `${environment.api}/${id}`,
+    articulo
+  );
+}
 }
