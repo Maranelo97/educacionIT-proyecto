@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IArticulo } from '../../models/IArticulo';
-import { mock } from '../../../assets/data/mock';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ArticulosService } from '../../services/articulos.service';
 
 @Component({
   selector: 'app-articulos-lista',
@@ -11,23 +11,21 @@ import { RouterLink } from '@angular/router';
   styleUrl: './articulos-lista.component.css'
 })
 export class ArticulosListaComponent implements OnInit {
-  articulo!: IArticulo; 
+  articulo!: IArticulo;
   public descripcion: string = "Lista de Articulos"
   items: IArticulo[] = [];
 
+  constructor(private articulosService: ArticulosService) {
+  }
   ngOnInit(): void {
-
-    this.populateItems()
+    this.articulosService.getArt().subscribe(
+      (res) => {
+        this.items.push(...res)
+      }
+    )
   }
 
-  populateItems(){
-    for(let i = 0; i < mock.length; i++){
-      this.items.push(mock[i])
-    }
-  }
-
-    onSelect(articulo: IArticulo)
-  {
+  onSelect(articulo: IArticulo) {
     console.log(articulo)
   }
 }

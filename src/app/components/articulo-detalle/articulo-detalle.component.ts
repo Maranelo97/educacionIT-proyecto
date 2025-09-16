@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IArticulo } from '../../models/IArticulo';
-import { mock } from '../../../assets/data/mock';
+import { ArticulosService } from '../../services/articulos.service';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -12,16 +12,20 @@ import { NgClass } from '@angular/common';
 })
 export class ArticuloDetalleComponent implements OnInit {
   public articulo?: IArticulo;
-  public articulos: IArticulo [] = mock
   public isStock: boolean = false
 
-  constructor(private activeRoute: ActivatedRoute){}
+  constructor(private activeRoute: ActivatedRoute, private articulosService: ArticulosService) { }
 
- ngOnInit(): void {
+  ngOnInit(): void {
     this.activeRoute.paramMap.subscribe((params) => {
-      this.articulo = this.articulos.find(
-        (item) => item.id == Number(params.get('id'))
-      );
+
+      const articleId = Number(params.get('id'))
+
+      this.articulosService.getArtById(articleId).subscribe((res) => {
+        this.articulo = res;
+      })
+      this.articulo = this.articulosService.getArticle(articleId)
+
       if (this.articulo) {
         this.isStock = this.articulo.stock > 0;
       }

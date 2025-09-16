@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IArticulo } from '../../models/IArticulo';
-import { mock } from '../../../assets/data/mock';
+import { ArticulosService } from '../../services/articulos.service';
 
 
 class FormValues {
@@ -11,7 +11,7 @@ class FormValues {
     public name: string,
     public description: string,
     public stock: number
-  ) {}
+  ) { }
 }
 
 @Component({
@@ -22,32 +22,37 @@ class FormValues {
 })
 export class ArticuloEdicionComponent implements OnInit {
   articulo?: IArticulo;
-  public articulos: IArticulo[] = mock;
 
   model = new FormValues(0, '', '', 0);
-  constructor(private activeRoute: ActivatedRoute) {}
+  constructor(private activeRoute: ActivatedRoute, private articulosService: ArticulosService) { }
 
   ngOnInit(): void {
     this.activeRoute.paramMap.subscribe((params) => {
-      this.articulo = this.articulos.find(
-        (item) => item.id == Number(params.get('id'))
-      );
+      const articuloId = Number(params.get('id'))
 
-      if (this.articulo) {
+      this.articulosService.getArtById(articuloId).subscribe((res) => {
+        this.articulo = res
+        
+
         this.model = new FormValues(
-          this.articulo.id,
-          this.articulo.name,
-          this.articulo.description,
-          this.articulo.stock
-        );
-      }
+          res.id,
+          res.name,
+          res.description,
+          res.stock
+        )
+      })
     });
+
+
+    console.log(this.articulo)
   }
 
 
-  saveForm(){
-    const name =  this.model.name 
+  saveForm() {
+    const name = this.model.name
     const description = this.model.description
+
     console.log("Valores enviados: ", name, description)
+
   }
 }
